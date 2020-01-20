@@ -1,0 +1,117 @@
+import UIKit
+
+//A - TREE QUESTION
+/*
+        6
+        /\
+       5  4
+      /\  \
+    3  2   1
+ */
+
+//How to find different Positive Numbers(Parents whitout, -1)
+
+
+//1- set solution
+//2- contains solution
+//3- vanila solution
+//4- construct a tree
+
+//1- set solution
+
+var array = [4,5,5,6,6,-1]
+var set:Set = Set(array)
+set.remove(-1)
+print(set)
+set.count
+
+///
+//contains solution
+
+var uniqueArray = [Int]()
+
+for number in array {
+    if !uniqueArray.contains(number){
+        uniqueArray.append(number)
+    }
+}
+
+uniqueArray.count-1
+
+//2- vanila solution, the same way as "contains"
+//have an empty array, and append which does not contain
+
+var newUniqueArray = [Int]()
+
+for element in array {
+    var breakCode = false
+    for newElement in newUniqueArray {
+        if element == newElement {
+            breakCode = true
+            break
+        }
+    }
+    if breakCode == false {
+        newUniqueArray.append(element)
+    }
+}
+print(newUniqueArray)
+
+
+
+//3- class solution
+
+struct Node {
+    var name:Int
+    var parentName:Int
+}
+
+struct Tree {
+    var nodeList:[Node]
+}
+
+var node1:Node = Node(name: 1, parentName:4)
+var node2:Node = Node(name: 2, parentName:5)
+var node3:Node = Node(name: 3, parentName:5)
+var node4:Node = Node(name: 4, parentName:6)
+var node5:Node = Node(name: 5, parentName:6)
+var node6:Node = Node(name: 6, parentName:-1)
+
+
+var tree:Tree = Tree(nodeList: [node1,node2,node3,node4,node5,node6])
+
+func parents(tree:Tree) -> Set<Int> {
+    var set = Set(tree.nodeList.map {$0.parentName})
+    set.remove(-1)
+    return set
+}
+
+var prnts = parents(tree: tree)
+
+
+
+
+/* ******************* */
+
+
+
+//B - Code review problem, string comparison
+/* I thought that there can be some problems when comparing two strings */
+
+
+var ninetynine:String = "99"
+var hundret:String = "100"
+var ten:String = "0010"
+var ten2:String = " 10"
+var abc:String = "abc"
+
+//test by "good" examples
+ninetynine > ten ? print("right") : print("wrong")
+hundret > ten ? print("right") : print("wrong")
+ten < hundret ? print("right") : print("wrong")
+ninetynine > hundret ? print("right") : print("wrong")
+
+
+//test by "bad" and "Failing" examples 
+ten == ten2 ? print("right") : print("wrong")
+abc>ten2 ? print("right") : print("wrong")
